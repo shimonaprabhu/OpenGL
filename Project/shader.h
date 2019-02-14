@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <sstream>
 
 #include <glew.h>
 #include <glfw3.h>
@@ -21,6 +22,8 @@ class Shader{
 private:
 
 	GLuint id;
+	const int versionMajor;
+	const int versionMinor;
 	std::string loadShaderSource(char* fileName){
 		std::string temp="";
 		std::string src="";
@@ -34,6 +37,13 @@ private:
 			std::cout<<"ERROR::SHADER::COULD_NOT_OPEN_FILE: "<<fileName<<"\n";
 		}
 		in_file.close();
+		std::ostringstream vm1;
+		std::ostringstream vm2;
+		vm1<<this->versionMajor;
+		vm2<<this->versionMinor;
+		std::string versionNr=vm1.str() +vm2.str()+"0";
+		
+		src.replace(src.find("#version"), 12, ("#version "+versionNr));
 		return src;
 	}
 
@@ -75,7 +85,7 @@ private:
 
 public:
 
-	Shader(char* vertexFile, char* fragmentFile, char* geometryFile=""){
+	Shader(const int versionMajor, const int versionMinor, char* vertexFile, char* fragmentFile, char* geometryFile=""): versionMajor(versionMajor), versionMinor(versionMinor){
 		GLuint vertexShader=0;
 		GLuint geometryShader=0;
 		GLuint fragmentShader=0;

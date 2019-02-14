@@ -18,10 +18,6 @@
 #include "shader.h"
 #include "texture.h"
 #include "material.h"
-
-struct Vertex{
-	glm::vec3 position;
-	glm::vec3 color;
-	glm::vec2 texcoord;
-	glm::vec3 normal;
-};
+#include "vertex.h"
+#include "mesh.h"
+#include "primitives.h"
