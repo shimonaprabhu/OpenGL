@@ -1,5 +1,6 @@
 #pragma once
 #include "libs.h"
+#include "Camera.h"
 
 enum shader_enums{SHADER_CORE_PROGRAM=0};
 enum texture_enums{TEX_PUSHEEN0=0, TEX_CONTAINER1};
@@ -17,6 +18,20 @@ private:
 	const int GL_VERSION_MAJOR;
 	const int GL_VERSION_MINOR;
 
+	float dt;
+	float curTime;
+	float lastTime;
+
+	double lastMouseX;
+	double lastMouseY;
+	double mouseX;
+	double mouseY;
+	double mouseOffsetX;
+	double mouseOffsetY;
+	bool firstMouse;
+
+	Camera camera;
+
 	glm::mat4 ViewMatrix;
 	glm::vec3 camPosition;
 	glm::vec3 worldUp;
@@ -30,6 +45,7 @@ private:
 	std::vector<Texture*> textures;
 	std::vector<Material*> materials;
 	std::vector<Mesh*> meshes;
+	std::vector<Model*> models;
 	std::vector<glm::vec3*> lights;
 	void initGLFW();
 	void initWindow(const char* title, bool resizable);
@@ -40,6 +56,7 @@ private:
 	void initTextures();
 	void initMaterials();
 	void initMeshes();
+	void initModels();
 	void initLights();
 	void initUniforms();
 	void updateUniforms();
@@ -48,10 +65,12 @@ public:
 	virtual ~Game();
 	int getWindowShouldClose();
 	void setWindowShouldClose();
+	void updateDt();
+	void updateMouseInput();
+	void updateKeyboardInput();
+	void updateInput();
 	void update();
 	void render();
 
 	static void framebuffer_size_callback(GLFWwindow* window, int fbW, int fbH);
-	static void updateInput(GLFWwindow* window);
-	static void updateInput(GLFWwindow* window, Mesh &mesh);
 };

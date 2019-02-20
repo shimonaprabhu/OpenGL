@@ -21,3 +21,4 @@
 #include "vertex.h"
 #include "mesh.h"
 #include "primitives.h"
+#include "Model.h"
